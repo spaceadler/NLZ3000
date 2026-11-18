@@ -4,7 +4,7 @@
 
 ![Language](https://img.shields.io/badge/Language-C-blue)
 ![ISA](https://img.shields.io/badge/ISA-Arm%20A64%20%7C%20x86--64-green)
-![Speedup](https://img.shields.io/badge/Speedup-48%C3%97%20on%20a%20Pi%204-orange)
+![Method](https://img.shields.io/badge/Method-idle%20%2B%20loaded%20runs-orange)
 
 ## Overview
 
@@ -34,37 +34,25 @@ sum = 64 + Σ (k = 0 .. m−1) 2^k · (63 − k)  =  (65 − m) · 2^m − 1
 
 With the default N = 2^30 − 1 that is **37,580,963,839**. `test.c` checks the formula against brute-force sums up to 2^20, and both versions against each other on edge cases and a million random values. Build with `-DN=1000000000u` to sum 0 to 10^9 instead, which gives 35,073,741,857.
 
-## Results
-
-Raspberry Pi 4B (Cortex-A72, 1.8 GHz, Arm A64), gcc 12.2.0, default N, three runs each, with background services running:
-
-| | Run 1 | Run 2 | Run 3 | Median |
-|---|---|---|---|---|
-| **`nlz_loop`** | 62.1762 s | 61.6088 s | 62.5806 s | 62.1762 s |
-| **`nlz_clz`** | 1.2941 s | 1.2399 s | 1.3940 s | 1.2941 s |
-
-**Speedup: 48.0× (medians).** At 1.8 GHz, 62 s over about 37.6 billion loop iterations is roughly 3 clock cycles per bit tested; the instruction handles a whole number in about 2.
-
-On x86 the speedup is smaller. Newer gcc versions can vectorise the bit-by-bit loop with AVX2 under `-march=native`, so the software version starts out partly parallel. Raw seconds between machines aren't comparable (different clocks, cores and compilers); the speedup is, because each machine is measured against itself.
-
-## Build
+## Build and Prove
 
 ```bash
-gcc -O2 -march=native bench.c -o nlz_loop
-gcc -O2 -march=native -DUSE_CLZ bench.c -o nlz_clz
-gcc -O2 -march=native test.c -o nlz_test
-./nlz_test && ./nlz_loop && ./nlz_clz
+./prove.sh
 ```
 
-Check that the instruction is used:
-
-```bash
-gcc -O2 -march=native -DUSE_CLZ -S bench.c
-grep -n clz bench.s      # Arm
-grep -n lzcnt bench.s    # x86
-```
+It builds `nlz_loop`, `nlz_clz` and `nlz_test` with `gcc -O2 -march=native`, runs the tests, writes the assembly of both builds, and shows that the instruction is in `nlz_clz.s` and absent from `nlz_loop.s`. On x86 it also counts AVX2 registers in `nlz_loop.s`, which shows whether gcc vectorised the loop. The output is saved to `prove_<arch>.txt`.
 
 On x86, `-march=native` is what enables LZCNT; without it gcc falls back to the older BSR. On Arm, CLZ is in the base instruction set.
+
+## Measuring
+
+```bash
+./bench.sh
+```
+
+Each program runs 4 times on an idle machine, then once while every hardware thread is kept busy with `yes > /dev/null`. The script logs the CPU temperature (and throttling, on a Pi) before each run, then prints arithmetic and geometric means and both speedups. Everything goes to `results_<arch>.txt`. Stop every other program and service before the idle runs, or the numbers aren't idle.
+
+Raw seconds between machines aren't comparable: clocks, cores and compilers all differ. The speedup is, because each machine is measured against itself.
 
 **Codemap:** [CODEMAP.md](CODEMAP.md), the files, hub functions and call graph, generated from the code.
 
