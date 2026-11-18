@@ -2,7 +2,7 @@
 
 ← [README](README.md)
 
-> Generated from commit `2f4b489` by `scripts/codemap.py`. Regenerate it from the workspace root with `python3 scripts/codemap.py nlz3000`; don't edit it by hand.
+> Generated from commit `8a3b6bb` by `scripts/codemap.py`. Regenerate it from the workspace root with `python3 scripts/codemap.py nlz3000`; don't edit it by hand.
 
 ## Files
 
@@ -11,8 +11,9 @@ Each box is a source file and its function count; an arrow means calls into that
 ```mermaid
 flowchart LR
     n_test_c["test.c · 3"]
-    n_nlz_h["nlz.h · 2"]
     n_bench_c["bench.c · 2"]
+    n_nlz_h["nlz.h · 2"]
+    n_bench_sh["bench.sh · 1"]
     n_test_c -->|2| n_nlz_h
 ```
 
@@ -52,6 +53,10 @@ flowchart LR
 
 - `now()` L24
 - `main()` L31 → `now()`
+
+### `bench.sh`
+
+- `temps()` L10
 
 ### `nlz.h`
 
