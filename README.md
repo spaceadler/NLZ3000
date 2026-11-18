@@ -14,12 +14,10 @@
 
 ```mermaid
 flowchart TB
-    h["nlz.h"] --> loop["nlz_loop<br/>test bit 63, 62, … until the first 1<br/>up to 64 iterations"]
-    h --> clz["nlz_clz<br/>__builtin_clzll, with NLZ(0) = 64"]
-    clz -->|"gcc -O2 -march=native"| arm["Arm: clz"]
-    clz -->|"gcc -O2 -march=native"| x86["x86: lzcnt"]
-    loop & clz --> bench["bench.c<br/>same file, built twice"]
-    loop & clz --> test["test.c<br/>agree with each other<br/>and with the closed form"]
+    h["nlz.h<br/>nlz_loop · nlz_clz"] --> b["bench.c<br/>built twice"]
+    h --> t["test.c<br/>checks both"]
+    b -->|"default"| l["nlz_loop<br/>bit by bit"]
+    b -->|"-DUSE_CLZ"| c["nlz_clz<br/>clz / lzcnt"]
 ```
 
 `__builtin_clzll(0)` is undefined in gcc, so `nlz_clz` returns 64 for 0 itself. CLZ and LZCNT both return 64 for 0 already, so the check costs nothing in the generated code.
