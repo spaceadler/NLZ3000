@@ -1,5 +1,8 @@
 /* test.c: checks nlz_loop and nlz_clz against each other and against a
  * closed form, so the benchmark's sum can be trusted without running it.
+ *
+ * Note: AI-generated for this repo. It is not part of the assignment that
+ * nlz.h and bench.c rewrite.
  */
 #include <stdio.h>
 #include <stdint.h>

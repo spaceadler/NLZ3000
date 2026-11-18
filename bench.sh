@@ -3,6 +3,8 @@
 # every hardware thread is kept busy by `yes > /dev/null`.
 # Run ./prove.sh first (it builds the programs). Stop every other program and
 # service you can, then:  ./bench.sh
+# Note: adapted by an AI assistant from my own measurement script, for the
+# AI-generated rewrite in nlz.h and bench.c.
 cd "$(dirname "$0")" || exit 1
 for p in ./nlz_loop ./nlz_clz; do
   [ -x "$p" ] || { echo "Missing $p: run ./prove.sh first"; exit 1; }

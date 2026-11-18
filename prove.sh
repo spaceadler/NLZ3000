@@ -2,6 +2,8 @@
 # prove.sh - build everything, run the correctness tests, and show that the
 # count-leading-zeros instruction is really in the fast build.
 # Works on Arm (aarch64) and x86-64.   Usage: ./prove.sh
+# Note: adapted by an AI assistant from my own measurement script, for the
+# AI-generated rewrite in nlz.h and bench.c.
 cd "$(dirname "$0")" || exit 1
 CFLAGS="-O2 -march=native"
 case "$(uname -m)" in

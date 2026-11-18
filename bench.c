@@ -5,6 +5,11 @@
  *   -DUSE_CLZ    -> nlz_clz  (one instruction)
  * The sum is printed so the compiler can't drop the work, and so the two
  * builds can be checked against each other and against test.c.
+ *
+ * Note: this file is an AI-generated rewrite of a university assignment's
+ * starting program. It does the same job but shares none of the original
+ * code, so it can be published without giving away the original or making
+ * it easy to copy for the assignment.
  */
 #include <stdio.h>
 #include <stdint.h>

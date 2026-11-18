@@ -2,6 +2,11 @@
  *
  * NLZ(x) is the number of 0 bits above the highest 1 bit:
  * NLZ(1) = 63, NLZ(2^63) = 0, and NLZ(0) = 64 by definition.
+ *
+ * Note: this file is an AI-generated rewrite of a university assignment's
+ * starting program. It does the same job but shares none of the original
+ * code, so it can be published without giving away the original or making
+ * it easy to copy for the assignment.
  */
 #ifndef NLZ_H
 #define NLZ_H
