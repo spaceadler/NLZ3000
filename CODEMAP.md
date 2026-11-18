@@ -2,7 +2,7 @@
 
 ← [README](README.md)
 
-> Generated from commit `8a3b6bb` by `scripts/codemap.py`. Regenerate it from the workspace root with `python3 scripts/codemap.py nlz3000`; don't edit it by hand.
+> Generated from commit `4fcb432` by `scripts/codemap.py`. Regenerate it from the workspace root with `python3 scripts/codemap.py nlz3000`; don't edit it by hand.
 
 ## Files
 
@@ -23,13 +23,13 @@ The most connected functions: where a change reaches furthest.
 
 | Function | Where | Called by | Calls |
 |---|---|---|---|
-| `main()` | `test.c:37` | 0 | 4 |
-| `check()` | `test.c:10` | 1 | 0 |
-| `expected_sum()` | `test.c:20` | 1 | 0 |
-| `main()` | `bench.c:31` | 0 | 1 |
-| `nlz_clz()` | `nlz.h:27` | 1 | 0 |
-| `nlz_loop()` | `nlz.h:12` | 1 | 0 |
-| `now()` | `bench.c:24` | 1 | 0 |
+| `main()` | `test.c:40` | 0 | 4 |
+| `check()` | `test.c:13` | 1 | 0 |
+| `expected_sum()` | `test.c:23` | 1 | 0 |
+| `main()` | `bench.c:36` | 0 | 1 |
+| `nlz_clz()` | `nlz.h:32` | 1 | 0 |
+| `nlz_loop()` | `nlz.h:17` | 1 | 0 |
+| `now()` | `bench.c:29` | 1 | 0 |
 
 ```mermaid
 flowchart LR
@@ -51,20 +51,20 @@ flowchart LR
 
 ### `bench.c`
 
-- `now()` L24
-- `main()` L31 → `now()`
+- `now()` L29
+- `main()` L36 → `now()`
 
 ### `bench.sh`
 
-- `temps()` L10
+- `temps()` L12
 
 ### `nlz.h`
 
-- `nlz_loop()` L12
-- `nlz_clz()` L27
+- `nlz_loop()` L17
+- `nlz_clz()` L32
 
 ### `test.c`
 
-- `check()` L10
-- `expected_sum()` L20
-- `main()` L37 → `check()`, `expected_sum()`, `nlz_clz()`, `nlz_loop()`
+- `check()` L13
+- `expected_sum()` L23
+- `main()` L40 → `check()`, `expected_sum()`, `nlz_clz()`, `nlz_loop()`
